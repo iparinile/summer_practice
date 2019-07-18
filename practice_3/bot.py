@@ -2,7 +2,7 @@ import telebot
 
 bot = telebot.TeleBot("844950001:AAHeEy2Jn3V1uoIO5Lv8R-RUBcj2_IRptho")
 
-keyboard = telebot.types.ReplyKeyboardMarkup(True, True)  # 1 true - уменьшает размер кнопок,
+keyboard = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)  # 1 true - уменьшает размер кнопок,
 # 2 - закрывает кнопки после нажатия
 keyboard.row('Привет', 'Пока')
 
