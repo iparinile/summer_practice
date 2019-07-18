@@ -20,11 +20,12 @@ def send_welcome(message):
                      reply_markup=keyboard)
     add_user(message.from_user.id, cursor, db)
 
+
 @bot.message_handler(content_types=['text'], func=lambda message:
-                     get_state(message.from_user.id, cursor) == 2)
+get_state(message.from_user.id, cursor) == 2)
 def answer(message):
     set_state(message.from_user.id, 1, cursor, db)
-    #bot.reply_to(message, 'Great!')
+    # bot.reply_to(message, 'Great!')
     mess = message.text
     markup = telebot.types.InlineKeyboardMarkup()
     markup.add(telebot.types.InlineKeyboardButton(
@@ -34,13 +35,14 @@ def answer(message):
     bot.send_message(message.chat.id, 'Where are you from?',
                      reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda call:True)
+
+@bot.callback_query_handler(func=lambda call: True)
 def callback(call):
     bot.delete_message(call.message.chat.id, call.message.message_id)
     state = call.data.split('_')[0]
     if call.data[-1] == '1':
         bot.send_message(call.message.chat.id,
-                         'You are from Russia and you are '+
+                         'You are from Russia and you are ' +
                          state, reply_markup=keyboard)
     else:
         bot.send_message(call.message.chat.id,
@@ -67,5 +69,6 @@ def sticker(message):
 @bot.message_handler(content_types=["photo"])
 def photo(message):
     bot.send_photo(message.chat.id, message.photo[-1].file_id)
+
 
 bot.polling()
