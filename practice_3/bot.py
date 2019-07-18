@@ -29,7 +29,9 @@ def sticker(sticker):
 
 @bot.message_handler(content_types=["photo"])
 def photo(photo):
-    bot.send_photo(photo.chat.id, photo.photo.file_id)
-
+    print(photo)
+    a = photo.photo[0]
+    print(a)
+    bot.send_photo(photo.chat.id, a.file_id)
 
 bot.polling()
