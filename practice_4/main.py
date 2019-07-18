@@ -24,7 +24,28 @@ def send_welcome(message):
                      get_state(message.from_user.id, cursor) == 2)
 def answer(message):
     set_state(message.from_user.id, 1, cursor, db)
-    bot.reply_to(message, 'Great!')
+    #bot.reply_to(message, 'Great!')
+    mess = message.text
+    markup = telebot.types.InlineKeyboardMarkup()
+    markup.add(telebot.types.InlineKeyboardButton(
+        text='Russia', callback_data=mess + '_1'))
+    markup.add(telebot.types.InlineKeyboardButton(
+        text='Other countries', callback_data=mess + '_2'))
+    bot.send_message(message.chat.id, 'Where are you from?',
+                     reply_markup=markup)
+
+@bot.callback_query_handler(func=lambda call:True)
+def callback(call):
+    bot.delete_message(call.message.chat.id, call.message.message_id)
+    state = call.data.split('_')[0]
+    if call.data[-1] == '1':
+        bot.send_message(call.message.chat.id,
+                         'You are from Russia and you are '+
+                         state, reply_markup=keyboard)
+    else:
+        bot.send_message(call.message.chat.id,
+                         'You are not from Russia and you are ' +
+                         state, reply_markup=keyboard)
 
 
 @bot.message_handler(content_types=['text'])
