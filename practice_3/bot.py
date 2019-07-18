@@ -29,7 +29,6 @@ def sticker(sticker):
 
 @bot.message_handler(content_types=["photo"])
 def photo(photo):
-    print(photo)
     a = photo.photo[0]
     print(a)
     bot.send_photo(photo.chat.id, a.file_id)
