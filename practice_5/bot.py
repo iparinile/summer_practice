@@ -18,6 +18,11 @@ def send_hello(message):
                      reply_markup=keyboard)
 
 
+@bot.message_handler(commands='help')
+def help(message):
+    bot.send_message(message.chat.id, 'Вот список доступных команд:\n/start - начать запись на ивент')
+
+
 @bot.message_handler(content_types=["text"])
 def send_message(message):
     if message.text == 'Привет, да!':
